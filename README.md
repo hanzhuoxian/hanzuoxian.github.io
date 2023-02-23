@@ -4,3 +4,4 @@
 
 [图标下载](https://icon-icons.com)  
 [图片下载](https://unsplash.com)  
+[图片压缩](https://tinify.cn/)  
