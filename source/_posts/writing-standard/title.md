@@ -5,7 +5,7 @@ categories:
 - 写作标准
 tags:
 - 写作
-- 标准
+- 标题
 - 规范
 ---
 
@@ -88,3 +88,7 @@ tags:
 
     **（3）C**
    ```
+
+## 参考链接
+
+- [中文技术文档的写作规范](https://github.com/ruanyf/document-style-guide)，by 阮一峰

@@ -12,6 +12,6 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println("蜗牛慢跑......")
+    fmt.Println("蜗牛慢跑……")
 }
 ```
