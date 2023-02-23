@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+  
+  <entry>
+    <title>标题规范</title>
+    <link href="/2023/02/23/writing_standard/title/"/>
+    <url>/2023/02/23/writing_standard/title/</url>
+    
+    <content type="html"><![CDATA[<h2 id="层级"><a href="#层级" class="headerlink" title="层级"></a>层级</h2><p>一级标题通常留给文章标题。在文章里段落标头从二级标题开始使用，并按照顺序依次使用标题。<br>下面是正确示例：</p><figure class="highlight plaintext"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs Plain">## 二级标题<br>### 三级标题<br>#### 四级标题<br></code></pre></td></tr></table></figure><h2 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h2><ol><li><p>标题不能越级出现。<br> 错误示例：下面文章结构，缺少三级标题。</p> <figure class="highlight plaintext"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs Plain">## 二级标题<br><br>#### 四级级标题<br></code></pre></td></tr></table></figure><p> 正确示例：</p> <figure class="highlight plaintext"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs Plain">## 二级标题<br><br>### 三级标题<br><br>#### 四级级标题<br></code></pre></td></tr></table></figure></li><li><p>标题要避免孤立编号（即同级标题只有一个）。<br>错误示例：下面的文章结构，<code>二级标题 A</code> 只包含一个 三级标题，完全可以省略 <code>三级标题 A</code>。</p><figure class="highlight plaintext"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs Plain">## 二级标题 A<br><br>### 三级标题 A<br><br>## 二级标题 B<br></code></pre></td></tr></table></figure></li><li><p>下级标题不重复上一级标题的名字。<br>错误示例：下面的文章结构，二级标题与三级标题同名，建议避免。</p><figure class="highlight plaintext"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs Plain">## 概述<br><br>### 概述<br></code></pre></td></tr></table></figure></li><li><p>谨慎使用四级标题，尽量避免出现，保持层级的简单，防止出现过于复杂的章节。</p></li></ol><p>如果三级标题下有并列性的内容，建议只使用项目列表（Item list）。</p><p>示例：下面的结构二要好于结构一。结构一适用的场景，主要是较长篇幅的内容。</p>   <figure class="highlight plaintext"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs Plain">结构一<br><br>### 三级标题<br><br>#### 四级标题 A<br><br>#### 四级标题 B<br><br>#### 四级标题 C<br><br>结构二<br><br>### 三级标题<br><br>**（1）A**<br><br>**（2）B**<br><br>**（3）C**<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>写作标准</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>写作</tag>
+      
+      <tag>标准</tag>
+      
+      <tag>规范</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  
+</search>
