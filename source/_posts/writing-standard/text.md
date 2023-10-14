@@ -190,7 +190,6 @@ IOC（International Olympic Committee，国际奥林匹克委员会）。这样�
 
 “online transaction processing”（在线事务处理）不是专有名词，不应大写。
 ```
-
 ## 参考链接
 
 - [中文技术文档的写作规范](https://github.com/ruanyf/document-style-guide)，by 阮一峰
