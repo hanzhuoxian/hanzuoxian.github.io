@@ -17,7 +17,7 @@
 2. 下载依赖
 
     ```bash
-    npm install
+    yarn install
     ```
 
 3. 启动本地服务
@@ -32,4 +32,9 @@
     ```bash
     hexo generate
     hexo g # 简写
+    ```
+5. 创建文章
+
+    ```
+    hexo new -p path title
     ```
