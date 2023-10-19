@@ -15,9 +15,6 @@ tags:
 下图展示了有哪些早期的编程语言对 Go 语言的设计产生了重要影响。
 
 ```mermaid
----
-title: Go 语言发展图
----
 graph TD
 AA["CSP \n (Hoare，1978)"] --> AB["Squeak \n (Cardelli & Pike, 1985)"]
 AB --> AC["Newsqueak \n (Pike 1989)"]
@@ -70,7 +67,7 @@ CA --> G["Go \n (Griesemer,Pike & Thompson, 2009)"]
 
 第一章包含了本教程的基本结构，通过十几个程序介绍了用 `Go` 语言如何实现类似读写文件、文本格式化、创建图像、网络客户端和服务器通讯等日常工作。
 
-第二章描述了 `Go` 语言程序的基本元素结构、变量、新类型定义、包和文件、以及作用域等概念。第三章讨论了数字、布尔值、字符串和常量，并延时了如何显示和处理 Unicode 字符。第四章描述了符合类型，从简单的数组、字典、切片到动态列表。第五章涵盖了函数，并讨论了错误处理、`panic` 和 `recover`，还有 `defer`语句。
+第二章描述了 `Go` 语言程序的基本元素结构、变量、新类型定义、包和文件、以及作用域等概念。第三章讨论了数字、布尔值、字符串和常量，并演示了如何显示和处理 Unicode 字符。第四章描述了符合类型，从简单的数组、字典、切片到动态列表。第五章涵盖了函数，并讨论了错误处理、`panic` 和 `recover`，还有 `defer`语句。
 
 第一章到第五章是基础部分，主流命令式编程语言这部分都类似。个别之处，`Go` 语言有自己特色的语法和风格，但是大多数程序员能很快适应。其余章节是 `Go` 语言 特有的：方法、接口、并发、包、测试和反射等语言特性。
 
@@ -86,14 +83,11 @@ CA --> G["Go \n (Griesemer,Pike & Thompson, 2009)"]
 
 每一章都有一些练习题，你可以用来测试你对 `Go` 的理解，你也可以探讨书中浙西列子的扩展和替代。
 
-书中的所有代码都可以从 http://gopl.io 上的仓库下载。 `go get` 命令根据每个例子的导入路径智能地获取、构建并安装。只需要选择一个目录作为工作空间，然后将 `GOPATH` 环境变量设置为该路径。
-
-必要时 `Go` 语言工具会创建目录。例如：
+书中的所有代码都可以从 https://github.com/adonovan/gopl.io 上的仓库下载。 `git clone https://github.com/adonovan/gopl.io` 命令将代码下载至当前目录。
 
 ```bash
-$ export GOPATH=$HOME/gobook    # 选择工作目录
-$ go get gopl.io/ch1/helloworld # 获取/编译/安装
-$ $GOPATH/bin/helloworld        # 运行程序
+$ git clone https://github.com/adonovan/gopl.io    # 克隆代码
+$ go run gopl.io/ch1/helloworld/main.go # 运行代码
 Hello, 世界                     # 这是中文
 
 ```
