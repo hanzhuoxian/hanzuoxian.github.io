@@ -16,15 +16,15 @@
   <meta name="author" content="韩卓贤">
   <meta name="keywords" content="Golang、技术">
   
-    <meta name="description" content="Go 语言起源编程语言的演化就像生物物种的演化类似，一个成功的编程语言的后代一般都会继承他们祖先的优点；当然有时多种语言杂合也可能会产生令人惊讶的特性；还有一些激进的新特性可能并没有先例。我们可以通过观察编程语言和软硬件是如何互相促进、互相影响的演化过程而学到很多。 下图展示了有哪些早期的编程语言对 Go 语言的设计产生了重要影响。 --- title: Go 语言发展图 --- graph TD">
+    <meta name="description" content="Go 语言起源编程语言的演化就像生物物种的演化类似，一个成功的编程语言的后代一般都会继承他们祖先的优点；当然有时多种语言杂合也可能会产生令人惊讶的特性；还有一些激进的新特性可能并没有先例。我们可以通过观察编程语言和软硬件是如何互相促进、互相影响的演化过程而学到很多。 下图展示了有哪些早期的编程语言对 Go 语言的设计产生了重要影响。 graph TD AA[&quot;CSP \n (Hoare，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="go 语言起源">
 <meta property="og:url" content="https://hanzhuoxian.github.io/2023/10/19/gopl/start/index.html">
-<meta property="og:site_name" content="蜗牛慢跑">
-<meta property="og:description" content="Go 语言起源编程语言的演化就像生物物种的演化类似，一个成功的编程语言的后代一般都会继承他们祖先的优点；当然有时多种语言杂合也可能会产生令人惊讶的特性；还有一些激进的新特性可能并没有先例。我们可以通过观察编程语言和软硬件是如何互相促进、互相影响的演化过程而学到很多。 下图展示了有哪些早期的编程语言对 Go 语言的设计产生了重要影响。 --- title: Go 语言发展图 --- graph TD">
+<meta property="og:site_name" content="韩卓贤">
+<meta property="og:description" content="Go 语言起源编程语言的演化就像生物物种的演化类似，一个成功的编程语言的后代一般都会继承他们祖先的优点；当然有时多种语言杂合也可能会产生令人惊讶的特性；还有一些激进的新特性可能并没有先例。我们可以通过观察编程语言和软硬件是如何互相促进、互相影响的演化过程而学到很多。 下图展示了有哪些早期的编程语言对 Go 语言的设计产生了重要影响。 graph TD AA[&quot;CSP \n (Hoare，">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-10-19T05:28:11.000Z">
-<meta property="article:modified_time" content="2023-10-19T05:33:49.101Z">
+<meta property="article:modified_time" content="2023-10-19T06:04:47.044Z">
 <meta property="article:author" content="韩卓贤">
 <meta property="article:tag" content="golang">
 <meta property="article:tag" content="gopl">
@@ -32,7 +32,7 @@
   
   
   
-  <title>go 语言起源 | 蜗牛慢跑</title>
+  <title>go 语言起源 | 韩卓贤</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -96,7 +96,7 @@
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
-      <strong>蜗牛慢跑</strong>
+      <strong>韩卓贤</strong>
     </a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
@@ -289,10 +289,7 @@
                 
                 <h2 id="Go-语言起源"><a href="#Go-语言起源" class="headerlink" title="Go 语言起源"></a>Go 语言起源</h2><p>编程语言的演化就像生物物种的演化类似，一个成功的编程语言的后代一般都会继承他们祖先的优点；当然有时多种语言杂合也可能会产生令人惊讶的特性；还有一些激进的新特性可能并没有先例。我们可以通过观察编程语言和软硬件是如何互相促进、互相影响的演化过程而学到很多。</p>
 <p>下图展示了有哪些早期的编程语言对 Go 语言的设计产生了重要影响。</p>
-<pre><code class=" mermaid">---
-title: Go 语言发展图
----
-graph TD
+<pre><code class=" mermaid">graph TD
 AA[&quot;CSP \n (Hoare，1978)&quot;] --&gt; AB[&quot;Squeak \n (Cardelli &amp; Pike, 1985)&quot;]
 AB --&gt; AC[&quot;Newsqueak \n (Pike 1989)&quot;]
 AC --&gt; AD[&quot;Alef \n (Winterbottom,1992)&quot;]
@@ -325,7 +322,7 @@ CA --&gt; G[&quot;Go \n (Griesemer,Pike &amp; Thompson, 2009)&quot;]
 <p><code>Go</code> 语言的标准库（通常被称为语言自带的电池），提供了清晰的构建模块和公共接口，包含<code>I/O</code> 操作、文本处理、图像、密码学、网络和分布式应用程序等，并支持许多标准化的文件格式和编解码协议。库和工具使用了大量的约定来减少额外的配置和解释，从而最终简化程序的逻辑，而且，每个 <code>Go</code> 程序结构都是如此的相似，因此，<code>Go</code> 程序也很容易学习。使用 <code>Go</code> 语言自带工具构建 <code>Go</code> 语言项目只需要使用文件名和标识符名称，一个偶尔的特殊注释来确定所有的库、可执行文件、测试、基准测试、例子、以及特定于平台的变量、项目的文档等；<code>Go</code> 语言源代码本身就包含了构建规范。</p>
 <h2 id="本书的组织"><a href="#本书的组织" class="headerlink" title="本书的组织"></a>本书的组织</h2><p>我们假设你已经有一种或多种其他编程语言的使用经历，不管是类似于<code>C</code>、<code>C++</code> 或 <code>Java</code> 的编译型语言，还是类似于 <code>Python</code>、<code>Ruby</code>、<code>JavaScript</code> 的脚本语言，因此我们不会像对完全的编程语言初学者那样解释所有的细节。因为，<code>Go</code> 语言的变量、常量、表达式、控制流和函数等基本语法也是类似的。</p>
 <p>第一章包含了本教程的基本结构，通过十几个程序介绍了用 <code>Go</code> 语言如何实现类似读写文件、文本格式化、创建图像、网络客户端和服务器通讯等日常工作。</p>
-<p>第二章描述了 <code>Go</code> 语言程序的基本元素结构、变量、新类型定义、包和文件、以及作用域等概念。第三章讨论了数字、布尔值、字符串和常量，并延时了如何显示和处理 Unicode 字符。第四章描述了符合类型，从简单的数组、字典、切片到动态列表。第五章涵盖了函数，并讨论了错误处理、<code>panic</code> 和 <code>recover</code>，还有 <code>defer</code>语句。</p>
+<p>第二章描述了 <code>Go</code> 语言程序的基本元素结构、变量、新类型定义、包和文件、以及作用域等概念。第三章讨论了数字、布尔值、字符串和常量，并演示了如何显示和处理 Unicode 字符。第四章描述了符合类型，从简单的数组、字典、切片到动态列表。第五章涵盖了函数，并讨论了错误处理、<code>panic</code> 和 <code>recover</code>，还有 <code>defer</code>语句。</p>
 <p>第一章到第五章是基础部分，主流命令式编程语言这部分都类似。个别之处，<code>Go</code> 语言有自己特色的语法和风格，但是大多数程序员能很快适应。其余章节是 <code>Go</code> 语言 特有的：方法、接口、并发、包、测试和反射等语言特性。</p>
 <p><code>Go</code> 语言的面向对象机制与一般语言不同。它没有类层次结构，甚至可以说没有类；仅仅通过组合（而不是继承）简单的对象来构建复杂的对象。方法不仅可以定义在结构体上，而且，可以定义在任何用户自定义类型上；并且，具体类型和抽象类型（接口）之间的关系是隐式的，所以很多类型的设计者可能并不知道该类型到底实现了那些接口。方法在第六章讨论，接口在第七章讨论。</p>
 <p>第八章讨论了基于顺序通信进程（CSP）概念的并发编程，使用 <code>goroutines</code> 和 <code>channels</code> 处理并发编程。第九章则讨论了传统的基于共享变量的并发编程。</p>
@@ -333,9 +330,8 @@ CA --&gt; G[&quot;Go \n (Griesemer,Pike &amp; Thompson, 2009)&quot;]
 <p>第十一章讨论了单元测试，<code>Go</code> 语言的工具和标准库中集成了轻量级的测试功能，避免了强大但复杂的测试框架。测试库提供了一些基本构件，必要时可以用来构件复杂的测试构件。</p>
 <p>第十二章讨论了反射，一种程序在运行期间审视自己的能力。反射是一个强大的编程工具，不过要谨慎地使用；这一章利用反射机制实现一些重要的 <code>Go</code> 语言 库函数，展示了反射的强大用法。第十三章解释了底层的编程的细节，在必要时，可以使用 <code>unsafe</code> 包绕过 <code>Go</code> 语言安全的类型系统。</p>
 <p>每一章都有一些练习题，你可以用来测试你对 <code>Go</code> 的理解，你也可以探讨书中浙西列子的扩展和替代。</p>
-<p>书中的所有代码都可以从 <a target="_blank" rel="noopener" href="http://gopl.io/">http://gopl.io</a> 上的仓库下载。 <code>go get</code> 命令根据每个例子的导入路径智能地获取、构建并安装。只需要选择一个目录作为工作空间，然后将 <code>GOPATH</code> 环境变量设置为该路径。</p>
-<p>必要时 <code>Go</code> 语言工具会创建目录。例如：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ <span class="hljs-built_in">export</span> GOPATH=<span class="hljs-variable">$HOME</span>/gobook    <span class="hljs-comment"># 选择工作目录</span><br>$ go get gopl.io/ch1/helloworld <span class="hljs-comment"># 获取/编译/安装</span><br>$ <span class="hljs-variable">$GOPATH</span>/bin/helloworld        <span class="hljs-comment"># 运行程序</span><br>Hello, 世界                     <span class="hljs-comment"># 这是中文</span><br><br></code></pre></td></tr></table></figure>
+<p>书中的所有代码都可以从 <a target="_blank" rel="noopener" href="https://github.com/adonovan/gopl.io">https://github.com/adonovan/gopl.io</a> 上的仓库下载。 <code>git clone https://github.com/adonovan/gopl.io</code> 命令将代码下载至当前目录。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git <span class="hljs-built_in">clone</span> https://github.com/adonovan/gopl.io    <span class="hljs-comment"># 克隆代码</span><br>$ go run gopl.io/ch1/helloworld/main.go <span class="hljs-comment"># 运行代码</span><br>Hello, 世界                     <span class="hljs-comment"># 这是中文</span><br><br></code></pre></td></tr></table></figure>
 
 <p>运行这些例子需要安装 <code>Go 1.5</code> 以上的版本。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ go version<br>go version go1.5 linux/amd64<br></code></pre></td></tr></table></figure>
@@ -439,9 +435,9 @@ CA --&gt; G[&quot;Go \n (Griesemer,Pike &amp; Thompson, 2009)&quot;]
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/10/19/gopl/chapter01/" title="入门">
+                      <a href="/2023/10/19/gopl/chapter01/" title="01 入门">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">入门</span>
+                        <span class="hidden-mobile">01 入门</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -572,7 +568,7 @@ CA --&gt; G[&quot;Go \n (Griesemer,Pike &amp; Thompson, 2009)&quot;]
     <div class="footer-inner">
   
     <div class="footer-content">
-       <span>蜗牛慢跑<span> <i class="iconfont icon-love"></i> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+       <span>韩卓贤<span> <i class="iconfont icon-love"></i> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
     </div>
   
   
