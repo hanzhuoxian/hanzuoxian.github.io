@@ -16,7 +16,9 @@ tags:
 
 我们现在以传统的 ”Hello World“ 来开始吧，这个例子首次出现于 1978 年出版的 《The C Programming Language》。`C` 语言是直接影响 `Go` 语言设计的语言之一，这个例子体现了 `Go` 语言的一些核心理念。
 
-*github.com/daymenu/study/go/gopl/ch01/helloworld/helloword.go*
+使用 `go mod` 模式，我们本书的基础目录为 `github.com/hanzhuoxian/study/go/gopl` ，在当前目录下执行  `go mod init github.com/hanzhuoxian/study/go/gopl`
+
+*github.com/hanzhuoxian/study/go/gopl/ch01/helloworld/helloword.go*
 
 ```go
 // 声明包
@@ -61,10 +63,10 @@ Hello，世界
 本书中所有示例代码上都有一行标记，利用这些标记可以从 `github.com` 代码仓库中获取代码
 
 ```
-github.com/daymenu/study/go/gopl/ch01/helloworld/helloword.go
+github.com/hanzhuoxian/study/go/gopl/ch01/helloworld/helloword.go
 ```
 
-执行 `go get github.com/daymenu/study/go/gopl/ch01/helloworld/helloword.go` 命令，就会从网上获取对应的代码，并放到对应的目录中，需要先安装 `Git` 或者 `Hg` 之类的版本管理工具，并将对应的命令添加到 `PATH` 环境变量中。序言已经提及，需要先设置好 `GOPATH` 环境变量。
+执行 `go get github.com/hanzhuoxian/study/go/gopl/ch01/helloworld/helloword.go` 命令，就会从网上获取对应的代码，并放到对应的目录中，需要先安装 `Git` 或者 `Hg` 之类的版本管理工具，并将对应的命令添加到 `PATH` 环境变量中。序言已经提及，需要先设置好 `GOPATH` 环境变量。
 
 来讨论下程序本身。`Go` 语言代码通过包（package）组织，包类似于其他语言里的库（libraries）或者模块（modules）。一个包由位于单个目录下的一个或多个 `.go` 源代码文件组成，目录定义包的作用。每个源文件都以一条 `package` 语句声明开始，这个例子里就是 `package main` ,表示该文件属于那个包，紧跟着一系列导入（`import`）的包，之后是存储在这个文件里的程序语句。
 
