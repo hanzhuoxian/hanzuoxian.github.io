@@ -6,7 +6,7 @@
 [图片下载](https://unsplash.com)  
 [图片压缩](https://tinify.cn/)  
 
-## hexo 使用
+## hexo 使用指南
 
 1. 安装 hexo
 
@@ -33,8 +33,17 @@
     hexo generate
     hexo g # 简写
     ```
+
 5. 创建文章
 
-    ```
+- 创建默认文章
+
+    ```bash
     hexo new -p path title
+    ```
+
+- 创建读书笔记模版文章
+  
+    ```bash
+    hexo new read -p path title 
     ```

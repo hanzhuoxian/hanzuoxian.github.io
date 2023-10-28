@@ -16,7 +16,7 @@ tags:
 
 我们现在以传统的 ”Hello World“ 来开始吧，这个例子首次出现于 1978 年出版的 《The C Programming Language》。`C` 语言是直接影响 `Go` 语言设计的语言之一，这个例子体现了 `Go` 语言的一些核心理念。
 
-使用 `go mod` 模式，我们本书的基础目录为 `github.com/hanzhuoxian/study/go/gopl` ，在当前目录下执行  `go mod init github.com/hanzhuoxian/study/go/gopl`
+我们使用 `go mod` 模式，我们本书的基础目录为 `github.com/hanzhuoxian/study/go/gopl` ，在当前目录下执行  `go mod init github.com/hanzhuoxian/study/go/gopl`,新建目录 `mkdir ch01/helloworld`，在 helloworld 目录下，新建文件 `helloword.go`,文件内容如下：
 
 *github.com/hanzhuoxian/study/go/gopl/ch01/helloworld/helloword.go*
 
