@@ -24,7 +24,7 @@
 <meta property="og:description" content="本章介绍 Go 语言的基础组件。本章提供了足够的信息和示例程序，希望可以帮你们尽快入门，写出有用的程序。本章和之后章节的示例程序都针对你可能遇到的现实案例。先了解几个 Go 程序涉及的主题从简单的文件处理、图像处理到互联网客户端和服务端并发。当然第一章不会解释细枝末节，但用这些程序来学习一门新语言还是很有效的。 学习一门新语言时，会有一种自然的倾向，按照自己熟悉的语言套路写新语言程序，学习 Go">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-10-19T05:32:12.000Z">
-<meta property="article:modified_time" content="2023-10-31T05:30:37.218Z">
+<meta property="article:modified_time" content="2023-10-31T12:27:56.319Z">
 <meta property="article:author" content="韩卓贤">
 <meta property="article:tag" content="golang">
 <meta property="article:tag" content="gopl">
@@ -233,7 +233,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.1k 字
+          4.5k 字
         
       </span>
     
@@ -244,7 +244,7 @@
         
         
         
-          26 分钟
+          38 分钟
         
       </span>
     
@@ -289,7 +289,7 @@
                 
                 <p>本章介绍 <code>Go</code> 语言的基础组件。本章提供了足够的信息和示例程序，希望可以帮你们尽快入门，写出有用的程序。本章和之后章节的示例程序都针对你可能遇到的现实案例。先了解几个 <code>Go</code> 程序涉及的主题从简单的文件处理、图像处理到互联网客户端和服务端并发。当然第一章不会解释细枝末节，但用这些程序来学习一门新语言还是很有效的。</p>
 <p>学习一门新语言时，会有一种自然的倾向，按照自己熟悉的语言套路写新语言程序，学习 <code>Go</code> 语言的过程中，请警惕这种想法，尽量别这么做。我们会演示怎么写好 <code>Go</code> 语言程序，所以请用本书的代码作为你写程序时的指南。</p>
-<h2 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h2><p>我们现在以传统的 ”Hello World“ 来开始吧，这个例子首次出现于 1978 年出版的 《The C Programming Language》。<code>C</code> 语言是直接影响 <code>Go</code> 语言设计的语言之一，这个例子体现了 <code>Go</code> 语言的一些核心理念。</p>
+<h2 id="1-1-Hello-World"><a href="#1-1-Hello-World" class="headerlink" title="1.1 Hello World"></a>1.1 Hello World</h2><p>我们现在以传统的 ”Hello World“ 来开始吧，这个例子首次出现于 1978 年出版的 《The C Programming Language》。<code>C</code> 语言是直接影响 <code>Go</code> 语言设计的语言之一，这个例子体现了 <code>Go</code> 语言的一些核心理念。</p>
 <p>我们使用 <code>go mod</code> 模式，我们本书的基础目录为 <code>github.com/hanzhuoxian/study/go/gopl</code> ，在当前目录下执行  <code>go mod init github.com/hanzhuoxian/study/go/gopl</code>,新建目录 <code>mkdir ch01/helloworld</code>，在 helloworld 目录下，新建文件 <code>helloword.go</code>,文件内容如下：</p>
 <p><em>github.com&#x2F;hanzhuoxian&#x2F;study&#x2F;go&#x2F;gopl&#x2F;ch01&#x2F;helloworld&#x2F;helloword.go</em></p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 声明包</span><br><br><span class="hljs-keyword">package</span> main<br><br><span class="hljs-comment">// 导入标准I/O包</span><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-comment">// 程序的入口方法</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	fmt.Println(<span class="hljs-string">&quot;Hello，世界&quot;</span>)<br>&#125;<br><br></code></pre></td></tr></table></figure>
@@ -304,12 +304,12 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ go build helloworld.go<br></code></pre></td></tr></table></figure>
 
 <p>这个命令生成一个名为 <code>helloworld</code> 的可执行的二进制文件。之后你可以随时运行它，不需任何处理。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">./helloworld</span><br>Hello，世界<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ./helloworld<br>Hello，世界<br></code></pre></td></tr></table></figure>
 
 <p>本书中所有示例代码上都有一行标记，利用这些标记可以从 <code>github.com</code> 代码仓库中获取代码</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">github.com<span class="hljs-regexp">/hanzhuoxian/</span>study<span class="hljs-regexp">/go/g</span>opl<span class="hljs-regexp">/ch01/</span>helloworld/helloword.go<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">https://github.com/hanzhuoxian/study<br></code></pre></td></tr></table></figure>
 
-<p>执行 <code>go get github.com/hanzhuoxian/study/go/gopl/ch01/helloworld/helloword.go</code> 命令，就会从网上获取对应的代码，并放到对应的目录中，需要先安装 <code>Git</code> 或者 <code>Hg</code> 之类的版本管理工具，并将对应的命令添加到 <code>PATH</code> 环境变量中。序言已经提及，需要先设置好 <code>GOPATH</code> 环境变量。</p>
+<p>执行 <code>git clone https://github.com/hanzhuoxian/study</code> 命令，就可以将代码下载到本地。</p>
 <p>来讨论下程序本身。<code>Go</code> 语言代码通过包（package）组织，包类似于其他语言里的库（libraries）或者模块（modules）。一个包由位于单个目录下的一个或多个 <code>.go</code> 源代码文件组成，目录定义包的作用。每个源文件都以一条 <code>package</code> 语句声明开始，这个例子里就是 <code>package main</code> ,表示该文件属于那个包，紧跟着一系列导入（<code>import</code>）的包，之后是存储在这个文件里的程序语句。</p>
 <p><code>Go</code> 标准库提供了 100 多个包，以支持常见功能，如输入、输出、排序以及文本处理。比如 <code>fmt</code> 包就含有格式化输出、接受输入的函数。<code>Println</code> 是其中一个基础函数，可以打印以逗号间隔的一个或多个值，并在最后添加一个换行符，从而输出一整行。</p>
 <p><code>main</code> 包比较特殊。它定义了一个独立可执行的程序，而不是一个库，在 <code>main</code> 包里的 <code>main</code> 函数也很特殊，它是整个程序执行时的入口。<code>main</code> 函数所做的事情就是程序做的，当然了，<code>main</code> 函数一般调用其他包里的函数完成很多工作（如 <code>fmt.Println</code>）。</p>
@@ -323,6 +323,17 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ go install golang.org/x/tools/cmd/goimports@latest<br></code></pre></td></tr></table></figure>
 
 <p>对于大多数用户来说，下载、编译包、运行测试用例、查看 <code>Go</code> 语言的文档等等常用功能都可以用 go 的工具完成 10.7 详细介绍这些知识。</p>
+<h2 id="1-2-命令行参数"><a href="#1-2-命令行参数" class="headerlink" title="1.2 命令行参数"></a>1.2 命令行参数</h2><p>大多数程序都是处理输入，产生输出；这也正是计算的定义。但是程序如何获取要输入的数据呢？一些程序生成自己的数据，但通常情况下、输入来自于程序外部：文件、网络、连接、其他程序的输出、敲击前盘的用户、命令行参数或其他输入源。下面几个例子会讨论其中几个输入源，首先是命令行参数。</p>
+<p><code>os</code> 包以跨平台的方式，提供了一些与操作系统交互的函数和变量。程序的命令行参数可以从 <code>os</code> 包的 <code>Args</code> 变量获取。<code>os</code> 包外部使用 <code>os.Args</code> 访问该变量。</p>
+<p><code>os.Args</code> 变量是一个一个字符串（string）的<em>切片</em>（slice）,切片是 <code>Go</code> 语言的基础概念，稍后详细介绍。现在先把切片 <code>s</code> 当做数组元素序列，序列的长度动态变化，用 <code>s[i]</code> 访问单个元素，用 <code>s[m:n]</code> 获取子序列，序列的元素数目为 <code>len(s)</code>。和大多数编程语言类似，区间索引时，<code>Go</code> 语言也采用作闭右开形式，即区间包括包括第一个索引元素，不包括最后一个索引元素。因为这样可以简化逻辑。比如 <code>s[m:n]</code> 这个切片，<code>0&lt;=m&lt;=n&lt;=len(s)</code>，包含 <code>n-m</code> 个元素。</p>
+<p><code>os.Args</code> 变量的第一个元素：<code>os.Args[0]</code> 是命令本身的名字；其他元素则是程序启动时传给他的参数。<code>s[m:n]</code> 形式的切片表达式，产生从第 <code>m</code> 个元素到第 <code>n-1</code> 个元素的切片，下个例子用到的元素包含在 <code>os.Args[1:len(os.Args)]</code> 切片中。如果省略切片表达式的 <code>m</code> 或 <code>n</code>，会默认传入 <code>0</code> 或 <code>len(s)</code>，因此前面的切片可以简写成 <code>os.Args[1:]</code>。</p>
+<p>下面是 Unix 里 <code>echo</code> 命令的一份实现，<code>echo</code> 把它的命令行参数打印成一行。程序导入了两个包，用括号把它们括起来写成列表形式，而没有分开写成独立的 <code>import</code> 声明。两种形式都合法，列表形式习惯上用得多。包导入顺序并不重要；<code>gofmt</code> 工具格式化时按照字母顺序对包名排序。（示例有多个版本时，我们会对示例编号，这样可以明确当前正在讨论的是哪个。）</p>
+<p><em>github.com&#x2F;hanzhuoxian&#x2F;study&#x2F;go&#x2F;gopl&#x2F;ch01&#x2F;echo1&#x2F;main.go</em></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-comment">// echo1 打印命令行的参数</span><br><br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;fmt&quot;</span><br>	<span class="hljs-string">&quot;os&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	<span class="hljs-comment">// go 在声明变量时没有显示初始化，go 语言会对变量隐式赋 0 值，字符串会赋值空字符串</span><br>	<span class="hljs-keyword">var</span> s, sep <span class="hljs-type">string</span><br>	<span class="hljs-comment">// 经典的for循环</span><br>	<span class="hljs-keyword">for</span> i := <span class="hljs-number">1</span>; i &lt;= <span class="hljs-built_in">len</span>(os.Args[<span class="hljs-number">1</span>:]); i++ &#123;<br>		<span class="hljs-comment">// += 是一个赋值运算符</span><br>		s += sep + os.Args[i]<br>		sep = <span class="hljs-string">&quot; &quot;</span><br>	&#125;<br>	fmt.Println(s)<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>注释语句以 <code>//</code> 开头。对于程序员来说，<code>//</code> 之后到行末之间所有的内容都是注释，被编译器忽略。按照惯例，我们在每个包的包声明前添加注释；对于 <code>main package</code>，注释包含一句或几句话，从整体角度对程序做个描述。</p>
+<p><code>var</code> 声明定义了两个 <code>string</code> 类型的变量 <code>s</code> 和 <code>sep</code>。变量会在声明时直接初始化。如果变量没有显式初始化，则被隐式地赋予其类型的 <em>零值</em>（zero value），数值类型是 <code>0</code>，字符串类型是空字符串 <code>&quot;&quot;</code>。这个例子里，声明把 <code>s</code> 和 <code>sep</code> 隐式地初始化成空字符串。第 2 章再来详细地讲解变量和声明。</p>
+<p>对数值类型，<code>Go 语言</code> 提供了常规的数值和逻辑运算符。而对 <code>string</code> 类型，<code>+</code> 运算符连接字符串。所以表达式：<code>sep + os.Args[i]</code> 表示连接字符串 <code>sep</code> 和 <code>os.Args[i]</code>。程序中使用的语句：<code>s+=sep+os.Args[i]</code> 是一条 <em>赋值语句</em>，将 <code>s</code> 的旧值跟 <code>sep</code> 与 <code>os.Args[i]</code> 连接后赋值回 <code>s</code>，等价于：<code>s=s+sep+os.Args[i]</code>。</p>
 
                 
               </div>
