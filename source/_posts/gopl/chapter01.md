@@ -139,3 +139,171 @@ func main() {
 
 对数值类型，`Go 语言` 提供了常规的数值和逻辑运算符。而对 `string` 类型，`+` 运算符连接字符串。所以表达式：`sep + os.Args[i]` 表示连接字符串 `sep` 和 `os.Args[i]`。程序中使用的语句：`s+=sep+os.Args[i]` 是一条 *赋值语句*，将 `s` 的旧值跟 `sep` 与 `os.Args[i]` 连接后赋值回 `s`，等价于：`s=s+sep+os.Args[i]`。
 
+运算符 `+=` 是赋值运算符（assignment operator），每种数值运算符或逻辑运算符，如 `+` 或 `*`，都有对应的赋值运算符。
+
+`echo` 程序可以每循环一次输出一个参数，这个版本却是不断地把新文本追加到末尾来构造字符串。字符串 `s` 开始为空，即值为 `""`，每次循环会添加一些文本；第一次迭代之后，还会再插入一个空格，因此循环结束时每个参数中间都有一个空格。这是一种二次加工（quadratic process），当参数数量庞大时，开销很大，但是对于 `echo`，这种情形不大可能出现。本章会介绍 `echo` 的若干改进版，下一章解决低效问题。
+
+循环索引变量 `i` 在 `for` 循环的第一部分中定义。符号 `:=` 是 *短变量声明*（short variable declaration）的一部分，这是定义一个或多个变量并根据它们的初始值为这些变量赋予适当类型的语句。下一章有这方面更多说明。
+
+自增语句 `i++` 给 `i` 加 `1`；这和 `i+=1` 以及 `i=i+1` 都是等价的。对应的还有 `i--` 给 `i` 减 `1`。它们是语句，而不像 C 系的其它语言那样是表达式。所以 `j=i++` 非法，而且 `++` 和 `--` 都只能放在变量名后面，因此 `--i` 也非法。
+
+Go 语言只有 `for` 循环这一种循环语句。`for` 循环有多种形式，其中一种如下所示：
+
+```go
+for initialization; condition; post {
+	// zero or more statements
+}
+```
+
+`for` 循环三个部分不需括号包围。大括号强制要求，左大括号必须和 *`post`* 语句在同一行。
+
+*`initialization`* 是可选的，在循环开始前执行，*`initialization`* 如果存在，必须是一条简单语句（simple statement），即短变量声明、自增语句、赋值语句或函数调用。`condition` 是一个布尔表达式（boolean expression ），其值在每次循环迭代开始时计算。如果为 `true` 则执行循环体语句。`post` 语句在循环体结束后执行，之后再次对 `condition` 求值。`condition` 为 `false` 时循环结束。
+
+`for` 循环的这三个部分每个都可以省略，如果省略  `initialization` 和 `post` 时分号也可以省略 
+
+```go
+// a traditional while loop
+for condition {
+	// zero or more statement
+}
+```
+
+如果连 `condition` 也省略了，像下面这样：
+
+```go
+// a traditional infinite loop
+for {
+	// zero or more statement
+}
+```
+
+这就变成一个无限循环，尽管如此，还可以用其他方式终止循环，如一条 `break` 或 `return` 语句。
+
+`for` 循环的另一种形式，在某种数据类型的区间上遍历，如字符串或切片，`echo` 的第二个版本展示了这种形式。
+
+*github.com/hanzhuoxian/study/go/gopl/ch01/echo2/main.go*
+
+```go
+package main
+
+// echo2 打印命令行的参数
+
+import (
+	"fmt"
+	"os"
+)
+
+func main() {
+	var s, sep string
+	for _, arg := range os.Args[1:] {
+		s += sep + arg
+		sep = " "
+	}
+	fmt.Println(s)
+}
+
+```
+
+每次循环迭代， `range` 产生一对值；索引以及在改索引处的元素值，这个例子不需要索引，但是 `range` 语法要求处理元素必须处理索引。一种思路是把索引值赋值给一个临时变量（比如 temp）然后忽略它的值，但 `Go` 语言不允许使用无用的局部变量（local variables），因为这会导致编译错误。
+
+Go 语言中这种情况的解决方法是用 *空标识符*（blank identifier），即 `_`（也就是下划线）。空标识符可用于在任何语法需要变量名但程序逻辑不需要的时候（如：在循环里）丢弃不需要的循环索引，并保留元素值。大多数的 Go 程序员都会像上面这样使用 `range` 和 `_` 写 `echo` 程序，因为隐式地而非显式地索引 `os.Args`，容易写对。
+
+`echo` 的这个版本使用一条短变量声明来声明并初始化 `s` 和 `seps`，也可以将这两个变量分开声明，声明一个变量有好几种方式，下面这些都等价：
+
+```go
+s := ""
+var s string
+var s = ""
+var s string = ""
+```
+
+用哪种不用哪种，为什么呢？第一种形式，是一条短变量声明，最简洁，但只能用在函数内部，而不能用于包变量。第二种形式依赖于字符串的默认初始化零值机制，被初始化为 `""`。第三种形式用得很少，除非同时声明多个变量。第四种形式显式地标明变量的类型，当变量类型与初值类型相同时，类型冗余，但如果两者类型不同，变量类型就必须了。实践中一般使用前两种形式中的某个，初始值重要的话就显式地指定变量的值，否则指定类型使用隐式初始化。
+
+如前文所述，每次循环迭代字符串 `s` 的内容都会更新。`+=` 连接原字符串、空格和下个参数，产生新字符串，并把它赋值给 `s`。`s` 原来的内容已经不再使用，将在适当时机对它进行垃圾回收。
+
+如果连接涉及的数据量很大，这种方式代价高昂。一种简单且高效的解决方案是使用 `strings` 包的 `Join` 函数：
+
+*github.com/hanzhuoxian/study/go/gopl/ch01/echo3/main.go*
+
+```go
+package main
+
+// echo3 打印命令行的参数
+
+import (
+	"fmt"
+	"strings"
+	"os"
+)
+
+func main() {
+	fmt.Println(strings.Join(os.Args[1:], " "))
+}
+
+```
+
+最后，如果不关心输出格式，只想看看输出值，或许只是为了调试，可以用 `Println` 为我们格式化输出。
+
+```go
+fmt.Println(os.Args[1:])
+```
+
+这条语句的输出结果跟 `strings.Join` 得到的结果很像，只是被放到了一对方括号里。切片都会被打印成这种格式。
+
+---------
+
+**练习 1.1：** 修改 `echo` 程序，使其能够打印 `os.Args[0]`，即被执行命令本身的名字。
+
+**练习 1.2：** 修改 `echo` 程序，使其打印每个参数的索引和值，每个一行。
+
+**练习 1.3：** 做实验测量潜在低效的版本和使用了 `strings.Join` 的版本的运行时间差异。（[1.6 节]讲解了部分 `time` 包，[11.4 节]展示了如何写标准测试程序，以得到系统性的性能评测。）
+
+## 1.3 查找重复的行
+
+对文件做拷贝、打印、搜索、排序、统计或类似事情的程序都有一个差不多的程序结构：一个处理输入的循环，在每个元素上执行计算处理，在处理的同时或最后产生输出。我们会展示一个名为 `dup` 的程序的三个版本；灵感来自于 Unix 的 `uniq` 命令，其寻找相邻的重复行。该程序使用的结构和包是个参考范例，可以方便地修改。
+
+`dup` 的第一个版本打印标准输入中多次出现的行，以重复次数开头。该程序将引入 `if` 语句，`map` 数据类型以及 `bufio` 包。
+
+
+*github.com/hanzhuoxian/study/go/gopl/ch01/dup1/main.go*
+
+```go
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"os"
+)
+
+func main() {
+	count := make(map[string]int)
+	input := bufio.NewScanner(os.Stdin)
+	for input.Scan() {
+		count[input.Text()]++
+		if input.Err() != nil {
+			panic("input is error")
+		}
+	}
+
+	for line, n := range count {
+		if n > 1 {
+			fmt.Printf("%d\t%s\n", n, line)
+		}
+	}
+}
+
+```
+
+正如 `for` 循环一样，`if` 语句条件两边也不加括号，但是主体部分需要加。`if` 语句的 `else` 部分是可选的，在 `if` 的条件为 `false` 时执行。
+
+**map** 存储了键/值（key/value）的集合，对集合元素，提供常数时间的存、取或测试操作。键可以是任意类型，只要其值能用 `==` 运算符比较，最常见的例子是字符串；值则可以是任意类型。这个例子中的键是字符串，值是整数。内置函数 `make` 创建空 `map`，此外，它还有别的作用。4.3 节讨论 `map`。
+
+每次 `dup` 读取一行输入，该行被当做键存入 `map`，其对应的值递增。`counts[input.Text()]++` 语句等价下面两句：
+
+```go
+line = input.Text()
+counts[line] = counts[like] + 1
+```
+
+`map` 中不含某个键时不用担心，首次读到新行时，等号右边的表达式 `counts[line]` 的值将被计算为其类型的零值，对于 `int` 即 `0`。
