@@ -307,3 +307,142 @@ counts[line] = counts[like] + 1
 ```
 
 `map` 中不含某个键时不用担心，首次读到新行时，等号右边的表达式 `counts[line]` 的值将被计算为其类型的零值，对于 `int` 即 `0`。
+
+为了打印结果，我们使用了基于 `range` 的循环，并在 `counts` 这个 `map` 上迭代。跟之前类似，每次迭代得到两个结果，键和其在 `map` 中对应的值。`map` 的迭代顺序并不确定，从实践来看，该顺序随机，每次运行都会变化。这种设计是有意为之的，因为能防止程序依赖特定遍历顺序，而这是无法保证的。
+
+继续来看 `bufio` 包，它使处理输入和输出方便又高效。`Scanner` 类型是该包最有用的特性之一，它读取输入并将其拆成行或单词；通常是处理行形式的输入最简单的方法。
+
+程序使用短变量声明创建 `bufio.Scanner` 类型的变量 `input`。
+
+```go
+input := bufio.NewScanner(os.Stdin)
+```
+
+该变量从程序的标准输入中读取内容。每次调用 `input.Scan()`，即读入下一行，并移除行末的换行符；读取的内容可以调用 `input.Text()` 得到。`Scan` 函数在读到一行时返回 `true`，不再有输入时返回 `false`。
+
+类似于 C 或其它语言里的 `printf` 函数，`fmt.Printf` 函数对一些表达式产生格式化输出。该函数的首个参数是个格式字符串，指定后续参数被如何格式化。各个参数的格式取决于“转换字符”（conversion character），形式为百分号后跟一个字母。举个例子，`%d` 表示以十进制形式打印一个整型操作数，而 `%s` 则表示把字符串型操作数的值展开。
+
+`Printf` 有一大堆这种转换，Go程序员称之为*动词（verb）*。下面的表格虽然远不是完整的规范，但展示了可用的很多特性：
+
+```text
+%d          十进制整数
+%x, %o, %b  十六进制，八进制，二进制整数。
+%f, %g, %e  浮点数： 3.141593 3.141592653589793 3.141593e+00
+%t          布尔：true或false
+%c          字符（rune） (Unicode码点)
+%s          字符串
+%q          带双引号的字符串"abc"或带单引号的字符'c'
+%v          变量的自然形式（natural format）
+%T          变量的类型
+%%          字面上的百分号标志（无操作数）
+```
+
+`dup1` 的格式字符串中还含有制表符`\t`和换行符`\n`。字符串字面上可能含有这些代表不可见字符的**转义字符（escape sequences）**。默认情况下，`Printf` 不会换行。按照惯例，以字母 `f` 结尾的格式化函数，如 `log.Printf` 和 `fmt.Errorf`，都采用 `fmt.Printf` 的格式化准则。而以 `ln` 结尾的格式化函数，则遵循 `Println` 的方式，以跟 `%v` 差不多的方式格式化参数，并在最后添加一个换行符。（译注：后缀 `f` 指 `format`，`ln` 指 `line`。）
+
+很多程序要么从标准输入中读取数据，如上面的例子所示，要么从一系列具名文件中读取数据。`dup` 程序的下个版本读取标准输入或是使用 `os.Open` 打开各个具名文件，并操作它们。
+
+
+*github.com/hanzhuoxian/study/go/gopl/ch01/dup2/main.go*
+
+```go
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"log"
+	"os"
+)
+
+func main() {
+	// 定义缓存行次数的map
+	counts := make(map[string]int)
+	// 获取命令行
+	files := os.Args[1:]
+	if len(files) == 0 {
+		// 使用标准输入
+		countLines(os.Stdin, counts)
+	} else {
+		// 循环读取文件
+		for _, filePath := range files {
+			// 打开文件
+			file, err := os.Open(filePath)
+			if err != nil {
+				fmt.Fprintf(os.Stderr, "dup2: %v\n", err)
+				continue
+			}
+			countLines(file, counts)
+			file.Close()
+		}
+	}
+
+	for line, n := range counts {
+		if n > 1 {
+			fmt.Printf("%d\t%s\n", n, line)
+		}
+	}
+
+}
+
+func countLines(f *os.File, counts map[string]int) {
+	input := bufio.NewScanner(f)
+	for input.Scan() {
+		counts[input.Text()]++
+	}
+	
+	// NOTE: ignoring potential errors from input.Err()
+}
+
+```
+
+
+`os.Open` 函数返回两个值。第一个值是被打开的文件（`*os.File`），其后被 `Scanner` 读取。
+
+`os.Open` 返回的第二个值是内置 `error` 类型的值。如果 `err` 等于内置值`nil`（译注：相当于其它语言里的 `NULL`），那么文件被成功打开。读取文件，直到文件结束，然后调用 `Close` 关闭该文件，并释放占用的所有资源。相反的话，如果 `err` 的值不是 `nil`，说明打开文件时出错了。这种情况下，错误值描述了所遇到的问题。我们的错误处理非常简单，只是使用 `Fprintf` 与表示任意类型默认格式值的动词 `%v`，向标准错误流打印一条信息，然后 `dup` 继续处理下一个文件；`continue` 语句直接跳到 `for` 循环的下个迭代开始执行。
+
+为了使示例代码保持合理的大小，本书开始的一些示例有意简化了错误处理，显而易见的是，应该检查 `os.Open` 返回的错误值，然而，使用 `input.Scan` 读取文件过程中，不大可能出现错误，因此我们忽略了错误处理。我们会在跳过错误检查的地方做说明。5.4 节中深入介绍错误处理。
+
+注意 `countLines` 函数在其声明前被调用。函数和包级别的变量（package-level entities）可以任意顺序声明，并不影响其被调用。
+
+`map` 是一个由 `make` 函数创建的数据结构的引用。`map` 作为参数传递给某函数时，该函数接收这个引用的一份拷贝（copy，或译为副本），被调用函数对 `map` 底层数据结构的任何修改，调用者函数都可以通过持有的 `map` 引用看到。在我们的例子中，`countLines` 函数向 `counts` 插入的值，也会被 `main` 函数看到。
+
+`dup` 的前两个版本以"流”模式读取输入，并根据需要拆分成多个行。理论上，这些程序可以处理任意数量的输入数据。还有另一个方法，就是一口气把全部输入数据读到内存中，一次分割为多行，然后处理它们。下面这个版本，`dup3`，就是这么操作的。这个例子引入了 `ReadFile` 函数（来自于`io/ioutil`包），其读取指定文件的全部内容，`strings.Split` 函数把字符串分割成子串的切片。（`Split` 的作用与前文提到的 `strings.Join` 相反。）
+
+我们略微简化了 `dup3`。首先，由于 `ReadFile` 函数需要文件名作为参数，因此只读指定文件，不读标准输入。其次，由于行计数代码只在一处用到，故将其移回 `main` 函数。
+
+```go
+package main
+
+import (
+	"fmt"
+	"os"
+	"strings"
+)
+
+func main() {
+	counts := make(map[string]int)
+	for _, filename := range os.Args[1:] {
+		data, err := os.ReadFile(filename)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "dup3: %v\n", err)
+			continue
+		}
+		for _, line := range strings.Split(string(data), "\n") {
+			counts[line]++
+		}
+
+	}
+	for line, n := range counts {
+		if n > 1 {
+			fmt.Printf("%d\t%s\n", n, line)
+		}
+	}
+}
+
+```
+
+`ReadFile` 函数返回一个字节切片（byte slice），必须把它转换为 `string`，才能用 `strings.Split` 分割。我们会在3.5.4 节详细讲解字符串和字节切片。
+
+---------
+
+**练习 1.4：** 修改 `dup2`，出现重复的行时打印文件名称。
