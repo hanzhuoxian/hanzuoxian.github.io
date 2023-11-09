@@ -410,6 +410,7 @@ func countLines(f *os.File, counts map[string]int) {
 
 我们略微简化了 `dup3`。首先，由于 `ReadFile` 函数需要文件名作为参数，因此只读指定文件，不读标准输入。其次，由于行计数代码只在一处用到，故将其移回 `main` 函数。
 
+*github.com/hanzhuoxian/study/go/gopl/ch01/dup3/main.go*
 ```go
 package main
 
@@ -446,3 +447,94 @@ func main() {
 ---------
 
 **练习 1.4：** 修改 `dup2`，出现重复的行时打印文件名称。
+
+## 1.4. GIF动画
+
+下面的程序会演示 `Go语言` 标准库里的 `image` 这个 `package` 的用法，我们会用这个包来生成一系列的 bit-mapped 图，然后将这些图片编码为一个 GIF 动画。我们生成的图形名字叫利萨如图形（Lissajous figures），这种效果是在1960年代的老电影里出现的一种视觉特效。它们是协振子在两个纬度上振动所产生的曲线，比如两个sin正弦波分别在x轴和y轴输入会产生的曲线。图1.1是这样的一个例子：
+
+![](/img/gopl/ch1-01.png)
+
+译注：要看这个程序的结果，需要将标准输出重定向到一个GIF图像文件（使用 `./lissajous > output.gif` 命令）。下面是GIF图像动画效果：
+
+![](/img/gopl/ch1-01.gif)
+
+这段代码里我们用了一些新的结构，包括 `const` 声明，`struct` 结构体类型，复合声明。和我们举的其它的例子不太一样，这一个例子包含了浮点数运算。这些概念我们只在这里简单地说明一下，之后的章节会更详细地讲解。
+
+*github.com/hanzhuoxian/study/go/gopl/ch01/lissajous/main.go*
+
+```go
+// Lissajous generates GIF animations of random Lissajous figures.
+
+package main
+
+import (
+	"image"
+	"image/color"
+	"image/gif"
+	"io"
+	"math"
+	"math/rand"
+	"os"
+)
+
+var palette = []color.Color{color.White, color.Black}
+
+const (
+	whiteIndex = 0 //palette中的第一个元素
+	blackIndex = 1 //palette中的第二个元素
+)
+
+func main() {
+	lissajous(os.Stdout)
+}
+
+func lissajous(out io.Writer) {
+	const (
+		cycles = 5    //完整 x 振荡器转数
+		res    = 0.01 //角分辨率
+		size   = 100  //图像画布封面[-size..+size]
+		nframe = 64   //动画帧数
+		delay  = 8    //以10ms为单位的帧间延迟
+	)
+
+	freq := rand.Float64() * 3.0 //
+	anim := gif.GIF{LoopCount: nframe}
+	phase := 0.0
+	for i := 0; i < nframe; i++ {
+		rect := image.Rect(0, 0, 2*size+1, 2*size+1) // 画布大小
+		img := image.NewPaletted(rect, palette)      // 所有像素点都会被设置为其0值，也就是第一个palette的值
+		for t := 0.0; t < cycles*2*math.Pi; t += res {
+			x := math.Sin(t)
+			y := math.Sin(t*freq + phase)
+			img.SetColorIndex(size+int(x*size+0.5), size+int(y*size+0.5), blackIndex)
+		}
+		phase += 0.1
+		anim.Delay = append(anim.Delay, delay) // 延迟80ms
+		anim.Image = append(anim.Image, img)   // 添加一帧
+	}
+	gif.EncodeAll(out, &anim)
+}
+
+```
+
+当我们 `import` 了一个包路径包含有多个单词的 `package` 时，比如 `image/color`（image和color两个单词），通常我们只需要用最后那个单词表示这个包就可以。所以当我们写 `color.White` 时，这个变量指向的是 `image/color` 包里的变量，同理 `gif.GIF` 是属于 `image/gif` 包里的变量。
+
+这个程序里的常量声明给出了一系列的常量值，常量是指在程序编译后运行时始终都不会变化的值，比如圈数、帧数、延迟值。常量声明和变量声明一般都会出现在包级别，所以这些常量在整个包中都是可以共享的，或者你也可以把常量声明定义在函数体内部，那么这种常量就只能在函数体内用。目前常量声明的值必须是一个数字值、字符串或者一个固定的boolean值。
+
+`[]color.Color{...}` 和 `gif.GIF{...}` 这两个表达式就是我们说的复合声明（4.2和4.4.1节有说明）。这是实例化Go语言里的复合类型的一种写法。这里的前者生成的是一个 `slice` 切片，后者生成的是一个 `struct` 结构体。
+
+`gif.GIF` 是一个 `struct` 类型（参考4.4节）。`struct` 是一组值或者叫字段的集合，不同的类型集合在一个 `struct` 可以让我们以一个统一的单元进行处理。`anim` 是一个 `gif.GIF` 类型的 `struct` 变量。这种写法会生成一个 `struct` 变量，并且其内部变量 `LoopCount` 字段会被设置为 `nframes`；而其它的字段会被设置为各自类型默认的零值。`struct`内部的变量可以以一个点（.）来进行访问，就像在最后两个赋值语句中显式地更新了`anim`这个`struct`的`Delay`和`Image`字段。
+
+`lissajous` 函数内部有两层嵌套的 `for` 循环。外层循环会循环 64 次，每一次都会生成一个单独的动画帧。它生成了一个包含两种颜色的 201*201 大小的图片，白色和黑色。所有像素点都会被默认设置为其零值（也就是调色板palette里的第0个值），这里我们设置的是白色。每次外层循环都会生成一张新图片，并将一些像素设置为黑色。其结果会`append`到之前结果之后。这里我们用到了`append`(参考4.2.1)内置函数，将结果`append`到`anim`中的帧列表末尾，并设置一个默认的 80ms 的延迟值。循环结束后所有的延迟值被编码进了 GIF 图片中，并将结果写入到输出流。`out` 这个变量是 `io.Writer` 类型，这个类型支持把输出结果写到很多目标，很快我们就可以看到例子。
+
+内层循环设置两个偏振值。x轴偏振使用sin函数。y轴偏振也是正弦波，但其相对x轴的偏振是一个0-3的随机值，初始偏振值是一个零值，随着动画的每一帧逐渐增加。循环会一直跑到x轴完成五次完整的循环。每一步它都会调用 `SetColorIndex` 来为(x,y)点来染黑色。
+
+`main` 函数调用 `lissajous` 函数，用它来向标准输出流打印信息，所以下面这个命令会像图 1.1 中产生一个 GIF 动画。
+
+```bash
+$ go run . >out.gif
+```
+
+**练习 1.5：** 修改前面的Lissajous程序里的调色板，由黑色改为绿色。我们可以用 `color.RGBA{0xRR, 0xGG, 0xBB, 0xff}` 来得到 `#RRGGBB` 这个色值，三个十六进制的字符串分别代表红、绿、蓝像素。
+
+**练习 1.6：** 修改Lissajous程序，修改其调色板来生成更丰富的颜色，然后修改SetColorIndex的第三个参数，看看显示结果吧。
