@@ -538,3 +538,291 @@ $ go run . >out.gif
 **练习 1.5：** 修改前面的Lissajous程序里的调色板，由黑色改为绿色。我们可以用 `color.RGBA{0xRR, 0xGG, 0xBB, 0xff}` 来得到 `#RRGGBB` 这个色值，三个十六进制的字符串分别代表红、绿、蓝像素。
 
 **练习 1.6：** 修改Lissajous程序，修改其调色板来生成更丰富的颜色，然后修改SetColorIndex的第三个参数，看看显示结果吧。
+
+## 1.5. 获取URL
+
+对于很多现代应用来说，访问互联网上的信息和访问本地文件系统一样重要。Go语言在 `net` 这个强大 `package` 的帮助下提供了一系列的 `package` 来做这件事情，使用这些包可以更简单地用网络收发信息，还可以建立更底层的网络连接，编写服务器程序。在这些情景下，Go语言原生的并发特性（在第八章中会介绍）显得尤其好用。
+
+为了最简单地展示基于HTTP获取信息的方式，下面给出一个示例程序 `fetch`，这个程序将获取对应的`url`，并将其源文本打印出来；这个例子的灵感来源于 `curl` 工具。当然，`curl` 提供的功能更为复杂丰富，这里只编写最简单的样例。这个样例之后还会多次被用到。
+
+*github.com/hanzhuoxian/study/go/gopl/ch01/fetch/main.go*
+```go
+// Fetch prints the content found at a URL.
+package main
+
+import (
+	"fmt"
+	"io"
+	"net/http"
+	"os"
+)
+
+func main() {
+	for _, url := range os.Args[1:] {
+		resp, err := http.Get(url)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "fetch: %v\n", err)
+			os.Exit(1)
+		}
+		b, err := io.ReadAll(resp.Body)
+		resp.Body.Close()
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "fetch: reading %s: %v\n", url, err)
+			os.Exit(1)
+		}
+		fmt.Printf("%s", b)
+	}
+}
+```
+
+这个程序从两个 `package` 中导入了函数，`net/http` 和 `io`，`http.Get`函数是创建HTTP请求的函数，如果获取过程没有出错，那么会在`resp`这个结构体中得到访问的请求结果。`resp`的`Body`字段包括一个可读的服务器响应流。`io.ReadAll`函数从`response`中读取到全部内容；将其结果保存在变量`b`中。`resp.Body.Close`关闭`resp`的`Body`流，防止资源泄露，`Printf`函数会将结果`b`写出到标准输出流中。
+
+```bash
+$ go run . https://baidu.com
+```
+
+HTTP 请求如果失败了的话，会得到下面这样的结果：
+
+```bash
+$ go run . https://baidu.comddd
+read https://baidu.comddd error : Get "https://baidu.comddd": dial tcp: lookup baidu.comddd: no such host
+```
+
+无论哪种失败原因，我们的程序都用了`os.Exit`函数来终止进程，并且返回一个`status`错误码，其值为1。
+
+**练习 1.7：** 函数调用io.Copy(dst, src)会从src中读取内容，并将读到的结果写入到dst中，使用这个函数替代掉例子中的ioutil.ReadAll来拷贝响应结构体到os.Stdout，避免申请一个缓冲区（例子中的b）来存储。记得处理io.Copy返回结果中的错误。
+
+**练习 1.8：** 修改fetch这个范例，如果输入的url参数没有 `http://` 前缀的话，为这个url加上该前缀。你可能会用到strings.HasPrefix这个函数。
+
+**练习 1.9：** 修改fetch打印出HTTP协议的状态码，可以从resp.Status变量得到该状态码。
+
+## 1.6. 并发获取多个 URL
+
+`Go语言` 最有意思并且最新奇的特性就是对并发编程的支持。并发编程是一个大话题，在第八章和第九章中会专门讲到。这里我们只浅尝辄止地来体验一下`Go语言`里的`goroutine`和`channel`。
+
+下面的例子`fetchall`，和前面小节的`fetch`程序所要做的工作基本一致，fetchall的特别之处在于它会同时去获取所有的URL，所以这个程序的总执行时间不会超过执行时间最长的那一个任务，前面的`fetch`程序执行时间则是所有任务执行时间之和。`fetchall`程序只会打印获取的内容大小和经过的时间，不会像之前那样打印获取的内容。
+
+
+*github.com/hanzhuoxian/study/go/gopl/ch01/fetchall/main.go*
+```go
+// Fetchall fetches URLs in parallel and reports their times and sizes.
+package main
+
+import (
+	"fmt"
+	"io"
+	"io"
+	"net/http"
+	"os"
+	"time"
+)
+
+func main() {
+	start := time.Now()
+	ch := make(chan string)
+	for _, url := range os.Args[1:] {
+		go fetch(url, ch) // start a goroutine
+	}
+	for range os.Args[1:] {
+		fmt.Println(<-ch) // receive from channel ch
+	}
+	fmt.Printf("%.2fs elapsed\n", time.Since(start).Seconds())
+}
+
+func fetch(url string, ch chan<- string) {
+	start := time.Now()
+	resp, err := http.Get(url)
+	if err != nil {
+		ch <- fmt.Sprint(err) // send to channel ch
+		return
+	}
+	nbytes, err := io.Copy(ioutil.Discard, resp.Body)
+	resp.Body.Close() // don't leak resources
+	if err != nil {
+		ch <- fmt.Sprintf("while reading %s: %v", url, err)
+		return
+	}
+	secs := time.Since(start).Seconds()
+	ch <- fmt.Sprintf("%.2fs  %7d  %s", secs, nbytes, url)
+}
+```
+
+下面使用fetchall来请求几个地址：
+
+```bash
+$ 
+$ go run . https://golang.org http://gopl.io https://godoc.org
+0.14s     6852  https://godoc.org
+0.16s     7261  https://golang.org
+0.48s     2475  http://gopl.io
+0.48s elapsed
+```
+
+`goroutine` 是一种函数的并发执行方式，而 `channel` 是用来在 `goroutine` 之间进行参数传递。`main` 函数本身也运行在一个 `goroutine` 中，而`go function`则表示创建一个新的`goroutine`，并在这个新的`goroutine`中执行这个函数。
+
+`main` 函数中用`make`函数创建了一个传递`string`类型参数的`channel`，对每一个命令行参数，我们都用`go`这个关键字来创建一个`goroutine`，并且让函数在这个`goroutine`异步执行`http.Get`方法。这个程序里的`io.Copy`会把响应的`Body`内容拷贝到`ioutil.Discard`输出流中（译注：可以把这个变量看作一个垃圾桶，可以向里面写一些不需要的数据），因为我们需要这个方法返回的字节数，但是又不想要其内容。每当请求返回内容时，`fetch`函数都会往`ch`这个`channel`里写入一个字符串，由`main`函数里的第二个`for`循环来处理并打印`channel`里的这个字符串。
+
+当一个`goroutine`尝试在一个`channel`上做`send`或者`receive`操作时，这个`goroutine`会阻塞在调用处，直到另一个`goroutine`从这个`channel`里接收或者写入值，这样两个`goroutine`才会继续执行`channel`操作之后的逻辑。在这个例子中，每一个`fetch`函数在执行时都会往`channel`里发送一个值`（ch <- expression）`，主函数负责接收这些值`（<-ch）`。这个程序中我们用`main`函数来完整地处理/接收所有`fetch`函数传回的字符串，可以避免因为有两个`goroutine`同时完成而使得其输出交错在一起的危险。
+
+**练习 1.10：** 找一个数据量比较大的网站，用本小节中的程序调研网站的缓存策略，对每个URL执行两遍请求，查看两次时间是否有较大的差别，并且每次获取到的响应内容是否一致，修改本节中的程序，将响应结果输出到文件，以便于进行对比。
+
+**练习 1.11：** 在fetchall中尝试使用长一些的参数列表，比如使用在alexa.com的上百万网站里排名靠前的。如果一个网站没有回应，程序将采取怎样的行为？（Section8.9 描述了在这种情况下的应对机制）。
+
+
+## 1.7. Web服务
+
+`Go语言`的内置库使得写一个类似`fetch`的`web`服务器变得异常地简单。在本节中，我们会展示一个微型服务器，这个服务器的功能是返回当前用户正在访问的 URL。比如用户访问的是 http://localhost:8000/hello ，那么响应是 `URL.Path = "hello"`。
+
+
+```go
+// Server1 is a minimal "echo" server.
+package main
+
+import (
+	"fmt"
+	"log"
+	"net/http"
+)
+
+func main() {
+	http.HandleFunc("/", handler) // each request calls handler
+	log.Fatal(http.ListenAndServe("localhost:8000", nil))
+}
+
+// handler echoes the Path component of the request URL r.
+func handler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "URL.Path = %q\n", r.URL.Path)
+}
+```
+
+我们只用了八九行代码就实现了一个Web服务程序，这都是多亏了标准库里的方法已经帮我们完成了大量工作。`main` 函数将所有发送到/路径下的请求和 `handler` 函数关联起来，/ 开头的请求其实就是所有发送到当前站点上的请求，服务监听 8000 端口。发送到这个服务的“请求”是一个 `http.Request` 类型的对象，这个对象中包含了请求中的一系列相关字段，其中就包括我们需要的URL。当请求到达服务器时，这个请求会被传给 `handler` 函数来处理，这个函数会将 `/hello` 这个路径从请求的 `URL` 中解析出来，然后把其发送到响应中，这里我们用的是标准输出流的 `fmt.Fprintf`。`Web`服务会在第 7.7 节中做更详细的阐述。
+
+让我们在后台运行这个服务程序。如果你的操作系统是 Mac OS X 或者 Linux，那么在运行命令的末尾加上一个 & 符号，即可让程序简单地跑在后台，windows 下可以在另外一个命令行窗口去运行这个程序。
+
+```bash
+$ go run . &
+```
+
+现在可以通过命令行来发送客户端请求了：
+
+```bash
+$ ./fetch http://localhost:8000
+URL.Path = "/"
+
+$ ./fetch http://localhost:8000/help
+URL.Path = "/help"
+
+```
+
+还可以直接在浏览器里访问这个URL，然后得到返回结果，如图1.2：
+![图1.2](/img/ch01-02.png)
+在这个服务的基础上叠加特性是很容易的。一种比较实用的修改是为访问的url添加某种状态。比如，下面这个版本输出了同样的内容，但是会对请求的次数进行计算；对URL的请求结果会包含各种URL被访问的总次数，直接对/count这个URL的访问要除外。
+
+```go
+// Server2 is a minimal "echo" and counter server.
+package main
+
+import (
+	"fmt"
+	"log"
+	"net/http"
+	"sync"
+)
+
+var mu sync.Mutex
+var count int
+
+func main() {
+	http.HandleFunc("/", handler)
+	http.HandleFunc("/count", counter)
+	log.Fatal(http.ListenAndServe("localhost:8000", nil))
+}
+
+// handler echoes the Path component of the requested URL.
+func handler(w http.ResponseWriter, r *http.Request) {
+	mu.Lock()
+	count++
+	mu.Unlock()
+	fmt.Fprintf(w, "URL.Path = %q\n", r.URL.Path)
+}
+
+// counter echoes the number of calls so far.
+func counter(w http.ResponseWriter, r *http.Request) {
+	mu.Lock()
+	fmt.Fprintf(w, "Count %d\n", count)
+	mu.Unlock()
+}
+```
+这个服务器有两个请求处理函数，根据请求的 `url` 不同会调用不同的函数：对 `/count` 这个 `url` 的请求会调用到counter这个函数，其它的url都会调用默认的处理函数。如果你的请求`pattern`是以/结尾，那么所有以该url为前缀的url都会被这条规则匹配。在这些代码的背后，服务器每一次接收请求处理时都会另起一个`goroutine`，这样服务器就可以同一时间处理多个请求。然而在并发情况下，假如真的有两个请求同一时刻去更新count，那么这个值可能并不会被正确地增加；这个程序可能会引发一个严重的`bug`：竞态条件（参见9.1）。为了避免这个问题，我们必须保证每次修改变量的最多只能有一个`goroutine`，这也就是代码里的`mu.Lock()`和`mu.Unlock()`调用将修改`count`的所有行为包在中间的目的。第九章中我们会进一步讲解共享变量。
+
+下面是一个更为丰富的例子，`handler`函数会把请求的`http`头和请求的`form`数据都打印出来，这样可以使检查和调试这个服务更为方便：
+
+```go
+// handler echoes the HTTP request.
+func handler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "%s %s %s\n", r.Method, r.URL, r.Proto)
+	for k, v := range r.Header {
+		fmt.Fprintf(w, "Header[%q] = %q\n", k, v)
+	}
+	fmt.Fprintf(w, "Host = %q\n", r.Host)
+	fmt.Fprintf(w, "RemoteAddr = %q\n", r.RemoteAddr)
+	if err := r.ParseForm(); err != nil {
+		log.Print(err)
+	}
+	for k, v := range r.Form {
+		fmt.Fprintf(w, "Form[%q] = %q\n", k, v)
+	}
+}
+```
+
+我们用`http.Request`这个`struct`里的字段来输出下面这样的内容：
+
+```text
+GET /?q=query HTTP/1.1
+Header["Accept-Encoding"] = ["gzip, deflate, sdch"]
+Header["Accept-Language"] = ["en-US,en;q=0.8"]
+Header["Connection"] = ["keep-alive"]
+Header["Accept"] = ["text/html,application/xhtml+xml,application/xml;..."]
+Header["User-Agent"] = ["Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5)..."]
+Host = "localhost:8000"
+RemoteAddr = "127.0.0.1:59911"
+Form["q"] = ["query"]
+```
+
+可以看到这里的`ParseForm`被嵌套在了`if`语句中。`Go语言`允许这样的一个简单的语句结果作为局部的变量声明出现在`if`语句的最前面，这一点对错误处理很有用处。我们还可以像下面这样写（当然看起来就长了一些）：
+
+```go
+err := r.ParseForm()
+if err != nil {
+	log.Print(err)
+}
+```
+用`if`和`ParseForm`结合可以让代码更加简单，并且可以限制`err`这个变量的作用域，这么做是很不错的。我们会在 2.7 节中讲解作用域。
+
+在这些程序中，我们看到了很多不同的类型被输出到标准输出流中。比如前面的`fetch`程序，把`HTTP`的响应数据拷贝到了`os.Stdout`，`lissajous`程序里我们输出的是一个文件。`fetchall`程序则完全忽略到了`HTTP`的响应`Body`，只是计算了一下响应`Body`的大小，这个程序中把响应`Body`拷贝到了`ioutil.Discard`。在本节的`web`服务器程序中则是用`fmt.Fprintf`直接写到了`http.ResponseWriter`中。
+
+尽管三种具体的实现流程并不太一样，他们都实现一个共同的接口，即当它们被调用需要一个标准流输出时都可以满足。这个接口叫作`io.Writer`，在 7.1 节中会详细讨论。
+
+`Go语言` 的接口机制会在第 7 章中讲解，为了在这里简单说明接口能做什么，让我们简单地将这里的`web`服务器和之前写的`lissajous`函数结合起来，这样 GIF 动画可以被写到 HTTP 的客户端，而不是之前的标准输出流。只要在 web 服务器的代码里加入下面这几行。
+
+```go
+handler := func(w http.ResponseWriter, r *http.Request) {
+	lissajous(w)
+}
+http.HandleFunc("/", handler)
+```
+
+或者另一种等价形式：
+
+```go
+http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	lissajous(w)
+})
+```
+
+`HandleFunc`函数的第二个参数是一个函数的字面值，也就是一个在使用时定义的匿名函数。这些内容我们会在 5.6 节中讲解。
+
+做完这些修改之后，在浏览器里访问 http://localhost:8000 。每次你载入这个页面都可以看到一个像图 1.3 那样的动画。
+
+
+练习 1.12： 修改`Lissajour`服务，从`URL`读取变量，比如你可以访问 http://localhost:8000/?cycles=20 这个URL，这样访问可以将程序里的`cycles`默认的`5`修改为`20`。字符串转换为数字可以调用`strconv.Atoi`函数。你可以在`godoc`里查看`strconv.Atoi`的详细说明。
