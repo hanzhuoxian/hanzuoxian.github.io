@@ -4,6 +4,27 @@
   
   
   <entry>
+    <title>代码提交规范</title>
+    <link href="/2024/01/02/blog/git_commit/"/>
+    <url>/2024/01/02/blog/git_commit/</url>
+    
+    <content type="html"><![CDATA[<h2 id="什么是-Commit-Message"><a href="#什么是-Commit-Message" class="headerlink" title="什么是 Commit Message"></a>什么是 Commit Message</h2><h2 id="Commit-Message-的作用"><a href="#Commit-Message-的作用" class="headerlink" title="Commit Message 的作用"></a>Commit Message 的作用</h2><h2 id="Commit-Message-的规范有哪些？"><a href="#Commit-Message-的规范有哪些？" class="headerlink" title="Commit Message 的规范有哪些？"></a>Commit Message 的规范有哪些？</h2><p>jQuery<br>JSHint<br>Ember<br>AngularJS-Karma<br>AngularJS-Angular</p><h3 id="Angular-规范的结构"><a href="#Angular-规范的结构" class="headerlink" title="Angular 规范的结构"></a>Angular 规范的结构</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs git">&lt;type&gt;[optional scope]: &lt;description&gt;<br>// 空行<br>[optional body]<br>// 空行<br>[optional footer(s)]<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>git</tag>
+      
+      <tag>git commit</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>变量</title>
     <link href="/2023/11/28/golang/var/"/>
     <url>/2023/11/28/golang/var/</url>
