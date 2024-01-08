@@ -16,24 +16,23 @@
   <meta name="author" content="韩卓贤">
   <meta name="keywords" content="Golang、技术">
   
-    <meta name="description" content="图书信息   书名 自控力法    作者 【英】凯利麦格尼格尔   出版社 京东读书   阅读时间 2023-10-30 ~ 2023   导言 自控只是一时的行为，而力不从心和失控却是常态。  一直以为是自己菜，自己自控力不行，其实自己碰到的问题有可能是共性问题，碰到问题需要去查找相关资料、去研究、去学习和去解决。而不是一味的内疚。——-end——-">
+    <meta name="description" content="什么是工作流集中式工作流定义：都使用 master 分支或者特定的某一分支进行开发。适用场景：团队人数少、开发不频繁、不需要同时维护多个版本的小项目。 功能分支工作流定义：开发新功能时基于 master 新建一个分支，在新分支上开发测试，测试完成之后合并回 master 分支。最后的合并不能直接合并需要提 Pull Request。适用场景：开发团队相对固定，规模较小的项目中。 Git Flow">
 <meta property="og:type" content="article">
-<meta property="og:title" content="自控力">
-<meta property="og:url" content="https://hanzhuoxian.github.io/2023/10/31/notes/self_control/index.html">
+<meta property="og:title" content="工作流设计">
+<meta property="og:url" content="https://hanzhuoxian.github.io/2024/01/02/blog/git_flow/index.html">
 <meta property="og:site_name" content="韩卓贤">
-<meta property="og:description" content="图书信息   书名 自控力法    作者 【英】凯利麦格尼格尔   出版社 京东读书   阅读时间 2023-10-30 ~ 2023   导言 自控只是一时的行为，而力不从心和失控却是常态。  一直以为是自己菜，自己自控力不行，其实自己碰到的问题有可能是共性问题，碰到问题需要去查找相关资料、去研究、去学习和去解决。而不是一味的内疚。——-end——-">
+<meta property="og:description" content="什么是工作流集中式工作流定义：都使用 master 分支或者特定的某一分支进行开发。适用场景：团队人数少、开发不频繁、不需要同时维护多个版本的小项目。 功能分支工作流定义：开发新功能时基于 master 新建一个分支，在新分支上开发测试，测试完成之后合并回 master 分支。最后的合并不能直接合并需要提 Pull Request。适用场景：开发团队相对固定，规模较小的项目中。 Git Flow">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-10-31T01:34:59.000Z">
+<meta property="article:published_time" content="2024-01-02T13:35:56.000Z">
 <meta property="article:modified_time" content="2024-01-08T01:45:51.767Z">
 <meta property="article:author" content="韩卓贤">
-<meta property="article:tag" content="阅读">
-<meta property="article:tag" content="笔记">
-<meta property="article:tag" content="自控力">
+<meta property="article:tag" content="git">
+<meta property="article:tag" content="git flow">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>自控力 | 韩卓贤</title>
+  <title>工作流设计 | 韩卓贤</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -211,7 +210,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="自控力"></span>
+            <span id="subtitle" data-typed-text="工作流设计"></span>
           
         </div>
 
@@ -222,8 +221,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-10-31 09:34" pubdate>
-          2023年10月31日 上午
+        <time datetime="2024-01-02 21:35" pubdate>
+          2024年1月2日 晚上
         </time>
       </span>
     
@@ -234,7 +233,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          152 字
+          714 字
         
       </span>
     
@@ -245,7 +244,7 @@
         
         
         
-          2 分钟
+          6 分钟
         
       </span>
     
@@ -283,35 +282,47 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">自控力</h1>
+            <h1 style="display: none">工作流设计</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="图书信息"><a href="#图书信息" class="headerlink" title="图书信息"></a>图书信息</h2><table>
+                <h2 id="什么是工作流"><a href="#什么是工作流" class="headerlink" title="什么是工作流"></a>什么是工作流</h2><h2 id="集中式工作流"><a href="#集中式工作流" class="headerlink" title="集中式工作流"></a>集中式工作流</h2><p>定义：都使用 master 分支或者特定的某一分支进行开发。<br>适用场景：团队人数少、开发不频繁、不需要同时维护多个版本的小项目。</p>
+<h2 id="功能分支工作流"><a href="#功能分支工作流" class="headerlink" title="功能分支工作流"></a>功能分支工作流</h2><p>定义：开发新功能时基于 master 新建一个分支，在新分支上开发测试，测试完成之后合并回 master 分支。最后的合并不能直接合并需要提 Pull Request。<br>适用场景：开发团队相对固定，规模较小的项目中。</p>
+<h2 id="Git-Flow-工作流"><a href="#Git-Flow-工作流" class="headerlink" title="Git Flow 工作流"></a>Git Flow 工作流</h2><p>定义：Git Flow 中定义了 5 种分支，分别是 master、develop、feature、release 和 hotfix，其中 master 和 develop 为常驻分支，不同研发阶段回用到不同的分支。</p>
+<table>
 <thead>
 <tr>
-<th>书名</th>
-<th>自控力法</th>
+<th>分支</th>
+<th>描述</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>作者</td>
-<td>【英】凯利麦格尼格尔</td>
+<td>master</td>
+<td>该分支上的最新代码永远是发布状态，不能直接在该分支上开发。master 每合并一个 hotfix&#x2F;release 都会打上版本标签</td>
 </tr>
 <tr>
-<td>出版社</td>
-<td>京东读书</td>
+<td>develop</td>
+<td>该分支上的代码是开发中的最新版本，该分支只做合并操作，不能直接在该分支上开发</td>
 </tr>
 <tr>
-<td>阅读时间</td>
-<td>2023-10-30 ~ 2023</td>
+<td>feature</td>
+<td>在研发阶段用来做功能开发，一个新功能会基于 develop 创建一个 feature 分支。功能开发完成后合并到 develop 分支并删除 feature 分支</td>
+</tr>
+<tr>
+<td>release</td>
+<td>在发布阶段用作版本发布的预发布分支，基于 develop 分支创建，分支名建议命名为 release&#x2F;xxx-xxx 测试后合并回 master 和 develop</td>
+</tr>
+<tr>
+<td>hotfix</td>
+<td>在维护阶段用来做 bug 修复</td>
+</tr>
+<tr>
+<td>适用场景：开发团队相对固定，项目较大的项目</td>
+<td></td>
 </tr>
 </tbody></table>
-<h2 id="导言"><a href="#导言" class="headerlink" title="导言"></a>导言</h2><blockquote>
-<p>自控只是一时的行为，而力不从心和失控却是常态。</p>
-</blockquote>
-<p>一直以为是自己菜，自己自控力不行，其实自己碰到的问题有可能是共性问题，碰到问题需要去查找相关资料、去研究、去学习和去解决。而不是一味的内疚。<br>——-end——-</p>
+<h2 id="Git-Forking-工作流"><a href="#Git-Forking-工作流" class="headerlink" title="Git Forking 工作流"></a>Git Forking 工作流</h2><p>定义：fork 仓库到自己账号下，功能分支开发，推入自己仓库远端分支，对源仓库提交 PR。<br>适用场景：开源项目、开发者有衍生版本的需求、开发人员可能是可以访问到项目的任何人。</p>
 
                 
               </div>
@@ -320,36 +331,13 @@
             <div>
               <div class="post-metas my-3">
   
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" class="category-chain-item">读书笔记</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
   
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E9%98%85%E8%AF%BB/">#阅读</a>
+        <a href="/tags/git/">#git</a>
       
-        <a href="/tags/%E7%AC%94%E8%AE%B0/">#笔记</a>
-      
-        <a href="/tags/%E8%87%AA%E6%8E%A7%E5%8A%9B/">#自控力</a>
+        <a href="/tags/git-flow/">#git flow</a>
       
     </div>
   
@@ -361,8 +349,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>自控力</div>
-      <div>https://hanzhuoxian.github.io/2023/10/31/notes/self_control/</div>
+      <div>工作流设计</div>
+      <div>https://hanzhuoxian.github.io/2024/01/02/blog/git_flow/</div>
     </div>
     <div class="license-meta">
       
@@ -374,7 +362,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年10月31日</div>
+          <div>2024年1月2日</div>
         </div>
       
       
@@ -406,9 +394,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/11/28/golang/name/" title="命名">
+                      <a href="/2024/01/02/blog/git_commit/" title="代码提交规范">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">命名</span>
+                        <span class="hidden-mobile">代码提交规范</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -416,8 +404,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/10/28/notes/learning_ability/" title="刘澜-《学习力 30 讲》">
-                        <span class="hidden-mobile">刘澜-《学习力 30 讲》</span>
+                      <a href="/2023/11/28/golang/var/" title="变量">
+                        <span class="hidden-mobile">变量</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
