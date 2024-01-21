@@ -16,23 +16,23 @@
   <meta name="author" content="韩卓贤">
   <meta name="keywords" content="Golang、技术">
   
-    <meta name="description" content="什么是工作流集中式工作流定义：都使用 master 分支或者特定的某一分支进行开发。适用场景：团队人数少、开发不频繁、不需要同时维护多个版本的小项目。 功能分支工作流定义：开发新功能时基于 master 新建一个分支，在新分支上开发测试，测试完成之后合并回 master 分支。最后的合并不能直接合并需要提 Pull Request。适用场景：开发团队相对固定，规模较小的项目中。 Git Flow">
+    <meta name="description" content="需求阶段市场调研需求分析需求文档需求评审设计阶段产品设计交互设计视觉设计技术设计对于后端开发人员，这设计技术方案之前，要做好充足的调研。一个技术方案，不仅要调研业界优秀的视线，还要了解友商相同技术的实现。只有这样，才可以确保我们的技术用最佳的方式实现。 技术评审需求排期开发阶段生成代码版权检查静态代码检查单元测试编译自测Code ReviewMerge构建（CI）代码扫描单元测试编译打包归档（镜像">
 <meta property="og:type" content="article">
-<meta property="og:title" content="工作流设计">
-<meta property="og:url" content="https://hanzhuoxian.github.io/2024/01/02/blog/git_flow/index.html">
+<meta property="og:title" content="研发流程设计">
+<meta property="og:url" content="https://hanzhuoxian.github.io/2024/01/02/blog/rd_flow/index.html">
 <meta property="og:site_name" content="韩卓贤">
-<meta property="og:description" content="什么是工作流集中式工作流定义：都使用 master 分支或者特定的某一分支进行开发。适用场景：团队人数少、开发不频繁、不需要同时维护多个版本的小项目。 功能分支工作流定义：开发新功能时基于 master 新建一个分支，在新分支上开发测试，测试完成之后合并回 master 分支。最后的合并不能直接合并需要提 Pull Request。适用场景：开发团队相对固定，规模较小的项目中。 Git Flow">
+<meta property="og:description" content="需求阶段市场调研需求分析需求文档需求评审设计阶段产品设计交互设计视觉设计技术设计对于后端开发人员，这设计技术方案之前，要做好充足的调研。一个技术方案，不仅要调研业界优秀的视线，还要了解友商相同技术的实现。只有这样，才可以确保我们的技术用最佳的方式实现。 技术评审需求排期开发阶段生成代码版权检查静态代码检查单元测试编译自测Code ReviewMerge构建（CI）代码扫描单元测试编译打包归档（镜像">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-01-02T13:35:56.000Z">
 <meta property="article:modified_time" content="2024-01-21T15:19:06.461Z">
 <meta property="article:author" content="韩卓贤">
-<meta property="article:tag" content="git">
-<meta property="article:tag" content="git flow">
+<meta property="article:tag" content="研发">
+<meta property="article:tag" content="研发流程设计">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>工作流设计 | 韩卓贤</title>
+  <title>研发流程设计 | 韩卓贤</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -210,7 +210,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="工作流设计"></span>
+            <span id="subtitle" data-typed-text="研发流程设计"></span>
           
         </div>
 
@@ -233,7 +233,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          714 字
+          356 字
         
       </span>
     
@@ -244,7 +244,7 @@
         
         
         
-          6 分钟
+          3 分钟
         
       </span>
     
@@ -282,48 +282,13 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">工作流设计</h1>
+            <h1 style="display: none">研发流程设计</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="什么是工作流"><a href="#什么是工作流" class="headerlink" title="什么是工作流"></a>什么是工作流</h2><h2 id="集中式工作流"><a href="#集中式工作流" class="headerlink" title="集中式工作流"></a>集中式工作流</h2><p>定义：都使用 master 分支或者特定的某一分支进行开发。<br>适用场景：团队人数少、开发不频繁、不需要同时维护多个版本的小项目。</p>
-<h2 id="功能分支工作流"><a href="#功能分支工作流" class="headerlink" title="功能分支工作流"></a>功能分支工作流</h2><p>定义：开发新功能时基于 master 新建一个分支，在新分支上开发测试，测试完成之后合并回 master 分支。最后的合并不能直接合并需要提 Pull Request。<br>适用场景：开发团队相对固定，规模较小的项目中。</p>
-<h2 id="Git-Flow-工作流"><a href="#Git-Flow-工作流" class="headerlink" title="Git Flow 工作流"></a>Git Flow 工作流</h2><p>定义：Git Flow 中定义了 5 种分支，分别是 master、develop、feature、release 和 hotfix，其中 master 和 develop 为常驻分支，不同研发阶段回用到不同的分支。</p>
-<table>
-<thead>
-<tr>
-<th>分支</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>master</td>
-<td>该分支上的最新代码永远是发布状态，不能直接在该分支上开发。master 每合并一个 hotfix&#x2F;release 都会打上版本标签</td>
-</tr>
-<tr>
-<td>develop</td>
-<td>该分支上的代码是开发中的最新版本，该分支只做合并操作，不能直接在该分支上开发</td>
-</tr>
-<tr>
-<td>feature</td>
-<td>在研发阶段用来做功能开发，一个新功能会基于 develop 创建一个 feature 分支。功能开发完成后合并到 develop 分支并删除 feature 分支</td>
-</tr>
-<tr>
-<td>release</td>
-<td>在发布阶段用作版本发布的预发布分支，基于 develop 分支创建，分支名建议命名为 release&#x2F;xxx-xxx 测试后合并回 master 和 develop</td>
-</tr>
-<tr>
-<td>hotfix</td>
-<td>在维护阶段用来做 bug 修复</td>
-</tr>
-<tr>
-<td>适用场景：开发团队相对固定，项目较大的项目</td>
-<td></td>
-</tr>
-</tbody></table>
-<h2 id="Git-Forking-工作流"><a href="#Git-Forking-工作流" class="headerlink" title="Git Forking 工作流"></a>Git Forking 工作流</h2><p>定义：fork 仓库到自己账号下，功能分支开发，推入自己仓库远端分支，对源仓库提交 PR。<br>适用场景：开源项目、开发者有衍生版本的需求、开发人员可能是可以访问到项目的任何人。</p>
-
+                <h2 id="需求阶段"><a href="#需求阶段" class="headerlink" title="需求阶段"></a>需求阶段</h2><h3 id="市场调研"><a href="#市场调研" class="headerlink" title="市场调研"></a>市场调研</h3><h3 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h3><h3 id="需求文档"><a href="#需求文档" class="headerlink" title="需求文档"></a>需求文档</h3><h3 id="需求评审"><a href="#需求评审" class="headerlink" title="需求评审"></a>需求评审</h3><h2 id="设计阶段"><a href="#设计阶段" class="headerlink" title="设计阶段"></a>设计阶段</h2><h3 id="产品设计"><a href="#产品设计" class="headerlink" title="产品设计"></a>产品设计</h3><h3 id="交互设计"><a href="#交互设计" class="headerlink" title="交互设计"></a>交互设计</h3><h3 id="视觉设计"><a href="#视觉设计" class="headerlink" title="视觉设计"></a>视觉设计</h3><h3 id="技术设计"><a href="#技术设计" class="headerlink" title="技术设计"></a>技术设计</h3><p>对于后端开发人员，这设计技术方案之前，要做好充足的调研。一个技术方案，不仅要调研业界优秀的视线，还要了解友商相同技术的实现。只有这样，才可以确保我们的技术用最佳的方式实现。</p>
+<h3 id="技术评审"><a href="#技术评审" class="headerlink" title="技术评审"></a>技术评审</h3><h3 id="需求排期"><a href="#需求排期" class="headerlink" title="需求排期"></a>需求排期</h3><h2 id="开发阶段"><a href="#开发阶段" class="headerlink" title="开发阶段"></a>开发阶段</h2><h3 id="生成代码"><a href="#生成代码" class="headerlink" title="生成代码"></a>生成代码</h3><h3 id="版权检查"><a href="#版权检查" class="headerlink" title="版权检查"></a>版权检查</h3><h3 id="静态代码检查"><a href="#静态代码检查" class="headerlink" title="静态代码检查"></a>静态代码检查</h3><h3 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h3><h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h3><h3 id="自测"><a href="#自测" class="headerlink" title="自测"></a>自测</h3><h3 id="Code-Review"><a href="#Code-Review" class="headerlink" title="Code Review"></a>Code Review</h3><h3 id="Merge"><a href="#Merge" class="headerlink" title="Merge"></a>Merge</h3><h2 id="构建（CI）"><a href="#构建（CI）" class="headerlink" title="构建（CI）"></a>构建（CI）</h2><h3 id="代码扫描"><a href="#代码扫描" class="headerlink" title="代码扫描"></a>代码扫描</h3><h3 id="单元测试-1"><a href="#单元测试-1" class="headerlink" title="单元测试"></a>单元测试</h3><h3 id="编译打包"><a href="#编译打包" class="headerlink" title="编译打包"></a>编译打包</h3><h3 id="归档（镜像仓库、制品库）"><a href="#归档（镜像仓库、制品库）" class="headerlink" title="归档（镜像仓库、制品库）"></a>归档（镜像仓库、制品库）</h3><h2 id="发布阶段"><a href="#发布阶段" class="headerlink" title="发布阶段"></a>发布阶段</h2><h3 id="代码发布"><a href="#代码发布" class="headerlink" title="代码发布"></a>代码发布</h3><h4 id="合并到主干"><a href="#合并到主干" class="headerlink" title="合并到主干"></a>合并到主干</h4><h4 id="生成版本号"><a href="#生成版本号" class="headerlink" title="生成版本号"></a>生成版本号</h4><h4 id="打标签"><a href="#打标签" class="headerlink" title="打标签"></a>打标签</h4><h4 id="代码扫描-1"><a href="#代码扫描-1" class="headerlink" title="代码扫描"></a>代码扫描</h4><h4 id="单元测试-2"><a href="#单元测试-2" class="headerlink" title="单元测试"></a>单元测试</h4><h4 id="编译-1"><a href="#编译-1" class="headerlink" title="编译"></a>编译</h4><h4 id="发布构建产物"><a href="#发布构建产物" class="headerlink" title="发布构建产物"></a>发布构建产物</h4><h3 id="发布审批"><a href="#发布审批" class="headerlink" title="发布审批"></a>发布审批</h3><h4 id="资源申请"><a href="#资源申请" class="headerlink" title="资源申请"></a>资源申请</h4><h4 id="创建发布计划"><a href="#创建发布计划" class="headerlink" title="创建发布计划"></a>创建发布计划</h4><h4 id="创建发布单"><a href="#创建发布单" class="headerlink" title="创建发布单"></a>创建发布单</h4><h4 id="发布单审批"><a href="#发布单审批" class="headerlink" title="发布单审批"></a>发布单审批</h4><h3 id="服务发布"><a href="#服务发布" class="headerlink" title="服务发布"></a>服务发布</h3><h4 id="预发部署"><a href="#预发部署" class="headerlink" title="预发部署"></a>预发部署</h4><h4 id="预发验证"><a href="#预发验证" class="headerlink" title="预发验证"></a>预发验证</h4><h4 id="现网部署"><a href="#现网部署" class="headerlink" title="现网部署"></a>现网部署</h4><h4 id="现网验证"><a href="#现网验证" class="headerlink" title="现网验证"></a>现网验证</h4><h2 id="运营阶段"><a href="#运营阶段" class="headerlink" title="运营阶段"></a>运营阶段</h2><h3 id="运维"><a href="#运维" class="headerlink" title="运维"></a>运维</h3><h4 id="运维工具"><a href="#运维工具" class="headerlink" title="运维工具"></a>运维工具</h4><h4 id="日志系统"><a href="#日志系统" class="headerlink" title="日志系统"></a>日志系统</h4><h4 id="监控告警"><a href="#监控告警" class="headerlink" title="监控告警"></a>监控告警</h4><h4 id="高效运维"><a href="#高效运维" class="headerlink" title="高效运维"></a>高效运维</h4><h3 id="运营"><a href="#运营" class="headerlink" title="运营"></a>运营</h3><h4 id="技术沙龙"><a href="#技术沙龙" class="headerlink" title="技术沙龙"></a>技术沙龙</h4><h4 id="技术推文"><a href="#技术推文" class="headerlink" title="技术推文"></a>技术推文</h4><h4 id="日活"><a href="#日活" class="headerlink" title="日活"></a>日活</h4><h4 id="月活"><a href="#月活" class="headerlink" title="月活"></a>月活</h4><h2 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h2><h3 id="研发模式"><a href="#研发模式" class="headerlink" title="研发模式"></a>研发模式</h3><h4 id="瀑布模式"><a href="#瀑布模式" class="headerlink" title="瀑布模式"></a>瀑布模式</h4><h4 id="迭代模式"><a href="#迭代模式" class="headerlink" title="迭代模式"></a>迭代模式</h4><h4 id="敏捷模式"><a href="#敏捷模式" class="headerlink" title="敏捷模式"></a>敏捷模式</h4><h3 id="CI-x2F-CD"><a href="#CI-x2F-CD" class="headerlink" title="CI&#x2F;CD"></a>CI&#x2F;CD</h3><h3 id="DevOps"><a href="#DevOps" class="headerlink" title="DevOps"></a>DevOps</h3>
                 
               </div>
             
@@ -335,9 +300,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/git/">#git</a>
+        <a href="/tags/%E7%A0%94%E5%8F%91/">#研发</a>
       
-        <a href="/tags/git-flow/">#git flow</a>
+        <a href="/tags/%E7%A0%94%E5%8F%91%E6%B5%81%E7%A8%8B%E8%AE%BE%E8%AE%A1/">#研发流程设计</a>
       
     </div>
   
@@ -349,8 +314,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>工作流设计</div>
-      <div>https://hanzhuoxian.github.io/2024/01/02/blog/git_flow/</div>
+      <div>研发流程设计</div>
+      <div>https://hanzhuoxian.github.io/2024/01/02/blog/rd_flow/</div>
     </div>
     <div class="license-meta">
       
@@ -394,9 +359,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/01/02/blog/git_commit/" title="代码提交规范">
+                      <a href="/2024/01/02/blog/git_flow/" title="工作流设计">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">代码提交规范</span>
+                        <span class="hidden-mobile">工作流设计</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -404,8 +369,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/01/02/blog/rd_flow/" title="研发流程设计">
-                        <span class="hidden-mobile">研发流程设计</span>
+                      <a href="/2023/11/28/golang/var/" title="变量">
+                        <span class="hidden-mobile">变量</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
