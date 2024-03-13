@@ -4,19 +4,6 @@
   
   
   <entry>
-    <title></title>
-    <link href="/2024/03/08/golang/mind/"/>
-    <url>/2024/03/08/golang/mind/</url>
-    
-    <content type="html"><![CDATA[<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mindmap">root(xx)<br>    xx<br></code></pre></td></tr></table></figure>]]></content>
-    
-    
-    
-  </entry>
-  
-  
-  
-  <entry>
     <title>for循环</title>
     <link href="/2024/02/19/bash/for/"/>
     <url>/2024/02/19/bash/for/</url>
