@@ -534,6 +534,8 @@ index:
 # Post Page
 #---------------------------
 post:
+  mermaid:
+    enable: true
   banner_img: /img/bg/morning.jpg
   banner_img_height: 60
   banner_mask_alpha: 0.4

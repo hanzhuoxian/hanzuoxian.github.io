@@ -12,7 +12,7 @@ tags:
 
 Go 语言中的函数名、变量名、常量名、类型名、语句标号和包名等所有的命名，都遵循一个简单的命名规则：一个名字必须以一个字母（Unicode字母）或下划线开头，后面可以跟任意数量的字母、数字或下划线。名字的长度没有限制，尽量使用短小的名字。
 
-```go 
+```go
 // 正确示例
 姓名 := "娃哈哈"
 name := "哇哈哈"
@@ -32,7 +32,7 @@ _name姓名 := "娃哈哈"
 
 关键字不能用于自定义的名字只能在特定的语法结构中使用，下面是所有关键字：
 
-```golang
+```go
 break      default       func     interface   select
 case       defer         go       map         struct
 chan       else          goto     package     switch
